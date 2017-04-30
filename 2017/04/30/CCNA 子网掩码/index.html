@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>CCNA 子网掩码 | NofunUtopia</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">CCNA 子网掩码</h1><a id="logo" href="/.">NofunUtopia</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 档案</i></a><a href="/guestbook/"><i class="fa fa-comments"> 留言</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">CCNA 子网掩码</h1><div class="post-meta">Apr 30, 2017<span> | </span><span class="category"><a href="/categories/CCNA/">CCNA</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2017/04/30/CCNA 子网掩码/" href="/2017/04/30/CCNA 子网掩码/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>子网掩码把网络分为各种子网，也可以把小的网络合并成大的网络。但是子网掩码必须结合 IP 地址一起使用，常用的 IP 地址分为 A 类、B 类、C 类。三种类别分别对应不同范围的子网掩码，A 类子网掩码第一子节为255，B 类子网掩码以255.255打头，而 C 类子网掩码以255.255.255打头<br><a id="more"></a><br><img src="http://ww1.sinaimg.cn/large/006tNbRwgy1ff501j6oytj30l003274z.jpg" alt=""></p>
+<h2 id="C-类网络的子网划分"><a href="#C-类网络的子网划分" class="headerlink" title="C 类网络的子网划分"></a>C 类网络的子网划分</h2><p>在 C 类地址中只有 8 位用于定义主机。<br><img src="http://ww3.sinaimg.cn/large/006tNbRwgy1ff50h79ub3j309705o3z3.jpg" alt=""><br>但是不能使用 /31 和 /32，因为至少要 2 个主机位。</p>
+<p>子网划分要熟悉五个问题</p>
+<ul>
+<li>选定的子网掩码将创建多少个子网？</li>
+<li>每个子网可包含多少台主机？</li>
+<li>每个子网的广播地址是什么？</li>
+<li>每个子网的广播地址是什么？</li>
+<li>每个子网可包含哪些主机地址？</li>
+</ul>
+<p>举一个例子来进行示范<br>网络地址 = 192.168.10.0<br>子网掩码 = 255.255.255.128<br>255.255.255.128的CIDR值为 /25, /25 代表子网掩码为25位的1，即255.255.255.128，写为二进制便是前三子节全部为1，第四子节为1000000。</p>
+<ul>
+<li><em>计算多少个子网？</em> 2^x，x 为取值为 1 的数。例如这一题<br>就是为 2 的 1 次方，子网数为 2。</li>
+<li><em>每个子网多少台主机？</em> 2^y - 2，y 为取值为 0 的数，但是减 2 是因为要拿出两个作为<em>子网地址</em>和<em>广播地址</em>。例如这一题主机数量就为2^7 - 2 = 126。</li>
+<li><em>有哪些合法子网？</em> 先用 256 - 子网掩码，算出来的数为一个块。例如之一题，256 - 128 = 128，所以块的大小就为128，合法的子网以一个块的大小来分割，直到达到子网掩码值。所以这题的合法子网为 0 和128。</li>
+<li><em>每个子网的广播地址是什么？</em> 在下一个子网之前的数字，所有主机位都为1，就是当前子网的广播地址。在这个例子中，对于子网0，广播地址就为127 。</li>
+<li><em>每个子网包含多少哪些合法主机地址？</em> 在子网地址和广播地址之间的数字就是合法的主机。这一个例子中的合法主机就为 1 ～ 126 和 129 ～ 254 之间的所有地址都为合法主机，0 和 128 用作了子网地址，127 和 255 用作广播地址。</li>
+</ul>
+<h2 id="B-类网络的子网划分"><a href="#B-类网络的子网划分" class="headerlink" title="B 类网络的子网划分"></a>B 类网络的子网划分</h2><p>B 类网络的计算方式和 C 类一样，但是 B 类的使用的主机位更多，而且子网掩码不仅仅可以在第四子节划分，还可以在第三子节。</p>
+<p>在 B 类网络中，子网号和广播地址都用两个子节表示，例如 128.255。</p>
+<p>示例1<br>网络地址 = 172.16.0.0<br>子网掩码 = 255.255.128.0<br>首先，255.255.128.0 的 CIDR 为 /17 。</p>
+<ul>
+<li>子网掩码第三子节为 1000 0000 ，所以子网数为2^1 = 2</li>
+<li>第三子节有 7 个 0，再加上第四子节的 8 个，所以每个子网的主机数为2^15 - 2 =32766</li>
+<li>256 - 128 =128 ，因此两个合法的子网为 0.0 和 128.0 。</li>
+<li>每个子网的广播地址为下一个子网地址 - 1，所以子网 0.0 的广播地址为127.255。128.0 的广播地址为 255.255。</li>
+<li>合法的主机地址就为子网地址和广播地址之间的所有地址。0.0 子网的主机地址为 0.1 ～ 127.254 ，128.0 的主机地址为 128.1 ～ 255.254。</li>
+</ul>
+<p>示例1计算的是子网掩码在第三子节的情况，还有一种情况是子网掩码在第四子节的。/24 和 /25 是比较特殊的两个B类子网掩码，现在来分别计算这两个。</p>
+<p>示例2<br>网络地址 = 172.16.0.0<br>子网掩码 =255.255.255.0 （/24）<br>B 类 /24 的后两子节为1111 1111 . 0000 0000。</p>
+<ul>
+<li>子网数量为2^8 = 256</li>
+<li>每个子网的主机数量为2^8 - 2 = 254</li>
+<li>合法的子网为 256 -255 = 1 ，所以子网为 0、1、2 、······ 、255</li>
+<li>广播地址为 0.255、1.255 、2.255、······ 、255.255</li>
+<li>主机地址为 0.1 ～ 0.254、 1.1 ～ 1.254 、2.1 ～ 2.254、······、255.254</li>
+</ul>
+<p>示例3<br>网络地址 = 172.168.0.0<br>子网掩码 = 255.255.255.128 （/25）<br>/25是比较难处理的子网掩码。第三、四子节为 1111 1111 . 1000 0000 。</p>
+<ul>
+<li>子网数为 2^9 = 512</li>
+<li>每个子网的主机数为 2^7 - 2 =126</li>
+<li>合法的子网数为 256 - 255 = 1，因此第三字节取值数为 0、1、2、3 等，但是子网数为 512 个，每个子网主机数 126 个，第三子节只有 0 ～255 个，所以第三子节每一个取值分为两个块，例如第三子节取值为 1 时，对应两个子网为 1.0 和 1.128</li>
+<li>例如第三子节取 1 时，广播地址分为两个子网，1.0 的广播地址为 1.127，1.128 的广播地址为 1.255</li>
+<li>合法的主机地址就为子网地址和广播地址之间</li>
+</ul>
+<h2 id="A-类网络的子网划分"><a href="#A-类网络的子网划分" class="headerlink" title="A 类网络的子网划分"></a>A 类网络的子网划分</h2><p>A 类网络的子网划分和 B 类和 C 类没有什么区别 ，只是处理位数增加到了24位，而 B 类和 C 类分别是 16 位和 8 位。</p>
+<p>示例4<br>255.255.0.0 (/16)<br>/16 第二三四子节为，1111 1111 . 0000 0000 . 0000 0000 。</p>
+<ul>
+<li>子网数为 2^8 = 256</li>
+<li>每个子网的主机数为 2^16 - 2 = 65534</li>
+<li>256 - 255 = 1 ，因此子网为 10.0.0.0 、10.1.0.0 、10.2.0.0、······ 、10.255.0.0</li>
+<li>每个子网的广播地址为 10.0.255.255 、10.1.255.255、10.2.255.255、······ 、10.255.255.255</li>
+<li>合法主机地址一样为子网地址和广播地址之间</li>
+</ul>
+<p>示例5<br>255.255.240.0 (/20)<br>/20 的第二三四位为，1111 1111 . 1111 0000 . 0000 0000 。</p>
+<ul>
+<li>子网数为 2^12 = 4096</li>
+<li>每个子网的主机数为 2^12 - 2 =4094</li>
+<li>在第二子节中，256 -255 = 1，但在第三子节中 256 -240 =16。所以在第二子节中子网分隔为 1，在第三子节子网为 0 、16 、32 等。例如 第二子节为 1 时，子网为 10.1.0.0 、10.1.16.0 、10.1.32.0 等。</li>
+<li>以下略</li>
+</ul>
+<p>示例6<br>255.255.255.192 (/26)<br>/26的第二三四子节为，1111 1111 . 1111 1111 . 1100 0000。</p>
+<ul>
+<li>子网数为 2^18 = 262 144</li>
+<li>每个子网的主机数为 2^6 - 2 = 62</li>
+<li>合法子网在第二和第三子节中，子网间隔为 1，在第四子节中子网间隔为 256 - 192 = 64</li>
+<li>以下略</li>
+</ul>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2017/04/30/CCNA 子网掩码/" data-id="cj24vno6q0002axp9856oxw55" class="article-share-link">分享到</a><div class="tags"><a href="/tags/IP/">IP</a><a href="/tags/广播地址/">广播地址</a><a href="/tags/子网掩码/">子网掩码</a></div><div class="post-nav"><a href="/2017/03/19/Liunx 基础命令(一)/" class="next">Linux 基础命令(一)</a></div><div id="disqus_thread"><script>var disqus_shortname = 'true';
+var disqus_identifier = '2017/04/30/CCNA 子网掩码/';
+var disqus_title = 'CCNA 子网掩码';
+var disqus_url = 'http://yoursite.com/2017/04/30/CCNA 子网掩码/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//true.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CCNA/">CCNA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/CSMA-CD/" style="font-size: 15px;">CSMA/CD</a> <a href="/tags/MAC地址/" style="font-size: 15px;">MAC地址</a> <a href="/tags/IP/" style="font-size: 15px;">IP</a> <a href="/tags/广播地址/" style="font-size: 15px;">广播地址</a> <a href="/tags/子网掩码/" style="font-size: 15px;">子网掩码</a> <a href="/tags/OSI模型/" style="font-size: 15px;">OSI模型</a> <a href="/tags/网络互联/" style="font-size: 15px;">网络互联</a> <a href="/tags/命令/" style="font-size: 15px;">命令</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/30/CCNA 子网掩码/">CCNA 子网掩码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/19/Liunx 基础命令(一)/">Linux 基础命令(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/05/CCNA 以太网和数据封装/">CCNA 以太网和数据封装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/04/CCNA 网络互联/">CCNA 网络互联</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/16/hello-world 下午10.37.09/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//true.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">NofunUtopia.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
